@@ -1,5 +1,5 @@
 class Animal:
-    def __init__(self, nome, especie, felicidade=0):
+    def __init__(self, nome, especie, felicidade=5):
         self.__nome = nome
         self.__especie = especie
         self.__felicidade = felicidade
@@ -14,13 +14,9 @@ class Animal:
         return self.__felicidade
     
     def comer(self):
-        self.__felicidade += 1
-        print(f"{self.__nome} está satisfeito, felicidade atual: {self.__felicidade}")
-
-    def get_felicidade(self):
-        return self.__felicidade
+        if self.__felicidade < 10:
+            self.__felicidade += 1
     
     def perder_felicidade(self):
         if self.__felicidade > 0:
             self.__felicidade -= 1
-            print(f"{self.__nome} perdeu felicidade, felicidade atual: {self.__felicidade}")

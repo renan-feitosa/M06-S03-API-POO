@@ -1,4 +1,4 @@
-from animal import Animal
+from classes.animal import Animal
 
 class Recinto:
     def __init__(self, especie, animais=None, limpeza=5):
@@ -43,14 +43,5 @@ class Recinto:
         self.__limpeza = 10
     
     def sujar_recinto(self):
-        if self.__limpeza >0:
+        if self.__limpeza > 0:
             self.__limpeza -= 1
-
-recinto_teste = Recinto("Girafa")
-animal_teste = Animal("Melwin", "Girafa")
-
-recinto_teste.adicionar_animal(animal_teste)
-
-for animal in recinto_teste.mostrar_animais():
-    print(animal_teste)
-print(recinto_teste.animais_quantidade())

@@ -1,5 +1,4 @@
-from recinto import Recinto
-from animal import Animal
+from classes.recinto import Recinto
 
 class Zoologico:
     def __init__(self, nome, recintos=None, ingresso=100, dinheiro=0):
@@ -48,20 +47,16 @@ class Zoologico:
 
     def dinheiro(self):
         return self.__dinheiro
-
-    def preco_ingresso(self, valor):
-        self.__ingresso = valor
     
     def abrir_zoo(self):
         visitantes = 0
         for recinto in self.__recintos:
-            if recinto.get_limpeza() > 6: 
-                for animal in recinto.get_animais():
-                    if animal.get_felicidade() > 8:
+            if recinto.limpeza() > 6: 
+                for animal in recinto.mostrar_animais():
+                    if animal.felicidade() > 8:
                         visitantes += 2
-                    if animal.get_felicidade() > 5:
+                    if animal.felicidade() > 5:
                         visitantes += 1
     
-        self.__dinheiro += visitantes * self.__ingresso
+        self.__dinheiro += visitantes * 50
         print(f"Zoológico atraiu {visitantes} visitantes, dinheiro atual: {self.__dinheiro}")
-    

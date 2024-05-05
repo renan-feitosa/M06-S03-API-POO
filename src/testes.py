@@ -1,7 +1,7 @@
 import pytest
-from zoologico import Zoologico
-from recinto import Recinto
-from animal import Animal
+from classes.zoologico import Zoologico
+from classes.recinto import Recinto
+from classes.animal import Animal
 
 
 # Testar a API do animal
@@ -16,19 +16,16 @@ def test_animal_especie():
 def test_animal_comer():
     animal = Animal("Leão", "Leão")
     animal.comer()
-    assert animal.felicidade() == 1
+    assert animal.felicidade() == 6
 
-def test_animal_get_felicidade():
+def test_animal_felicidade():
     animal = Animal("Leão", "Leão")
-    assert animal.get_felicidade() == 0
+    assert animal.felicidade() == 5
 
 def test_animal_perder_felicidade():
     animal = Animal("Leão", "Leão")
-    animal.comer()
-    animal.perder_felicidade()
-    assert animal.felicidade() == 0
-
-    animal.perder_felicidade()
+    for i in range(5):
+        animal.perder_felicidade()
     assert animal.felicidade() == 0
 
 
@@ -80,7 +77,7 @@ def test_recinto_alimentar_recinto():
     animal = Animal("Leão", "Leão")
     recinto.adicionar_animal(animal)
     recinto.alimentar_recinto()
-    assert animal.felicidade() == 1
+    assert animal.felicidade() == 6
 
 def test_recinto_limpeza():
     recinto = Recinto("Leão")
