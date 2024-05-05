@@ -1,16 +1,14 @@
 import time
-from zoologico import Zoologico
-from recinto import Recinto
-from animal import Animal
+from classes.zoologico import Zoologico
+from classes.recinto import Recinto
+from classes.animal import Animal
 
 zoo = Zoologico("My Zoo")
 
 def jogar():
-
-   
-        # tela_inicio()
-        # opcao = input("")
-        # tutorial()
+        tela_inicio()
+        opcao = input("")
+        tutorial()
         while True:
             menu_geral()
 
@@ -23,12 +21,6 @@ def tela_inicio():
     print("           `---'                                ")
 
     print("(ღ˘⌣˘ღ) Bem-vindos ao My Zoo, o melhor zoológico virtual! Para jogar, pressione Enter")
-    # print("1. Alimentar animais")
-    # print("2. Limpar recintos")
-    # print("3. Mostrar recintos")
-    # print("4. Mostrar dinheiro")
-    # print("5. Atrair visitantes")
-    # print("0. Sair do jogo")
 
 def tutorial():
     print("\nhm??")
@@ -86,6 +78,9 @@ def menu_zoo():
     else:
         print("Opção inválida")
 
+def abrir_zoo():
+    zoo.abrir_zoo()
+
 def menu_recintos():
 
     print("\n")
@@ -104,10 +99,7 @@ def menu_recintos():
     index = 3
     if zoo.recintos_quantidade() == 0:
         pass
-    if zoo.recintos_quantidade() == 1:
-        if opcao == "3":
-            animais_sem_recinto()
-    if zoo.recintos_quantidade() > 1:
+    if zoo.recintos_quantidade() > 0:
         for recinto in zoo.mostrar_recintos():
             if opcao == str(index):
                 menu_recinto(recinto)
@@ -116,8 +108,6 @@ def menu_recintos():
         criar_recinto()
     elif opcao == "2":
         remover_recinto()
-    elif opcao == "3":
-        animais_sem_recinto()
     elif opcao == "0":
         return
     else:
@@ -136,12 +126,6 @@ def remover_recinto():
             zoo.remover_recinto(recinto)
     print(f"Recinto {nome} removido com sucesso")
 
-def animais_sem_recinto():
-    for animal in zoo.mostrar_animais():
-        print(f"Nome: {animal[0]}")
-        print(f"Espécie: {animal[1]}")
-        print(f"Felicidade: {animal[2]}")
-
 def menu_recinto(recinto):
     print("\n")
     print(f'Nome: {recinto.nome()}')
@@ -152,7 +136,6 @@ def menu_recinto(recinto):
     print("2. Remover animal")
     print("3. Alimentar animais")
     print("4. Limpar recinto")
-    print("5. Sujar recinto")
     print("0. Voltar")
     opcao = input("Escolha uma opção: ")
     if opcao == "1":
@@ -163,12 +146,30 @@ def menu_recinto(recinto):
         alimentar_animais(recinto)
     elif opcao == "4":
         limpar_recinto(recinto)
-    elif opcao == "5":
-        sujar_recinto(recinto)
     elif opcao == "0":
         return
     else:
         print("Opção inválida")
+
+def adicionar_animal(recinto):
+    nome = input("Qual o nome do animal? ")
+    especie = input("Qual a espécie do animal? ")
+    animal = Animal(nome, especie)
+    recinto.adicionar_animal(animal)
+    print(f"Animal {nome} adicionado com sucesso")
+
+def remover_animal(recinto):
+    nome = input("Qual o nome do animal a ser removido? ")
+    for animal in recinto.mostrar_animais():
+        if animal[0] == nome:
+            recinto.remover_animal(animal)
+    print(f"Animal {nome} removido com sucesso")
+
+def alimentar_animais(recinto):
+    recinto.alimentar_recinto()
+
+def limpar_recinto(recinto):
+    recinto.limpar_recinto()
 
 if __name__ == "__main__":
     jogar()

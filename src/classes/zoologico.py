@@ -2,9 +2,9 @@ from recinto import Recinto
 from animal import Animal
 
 class Zoologico:
-    def __init__(self, nome, recintos=[], ingresso=0, dinheiro=0):
+    def __init__(self, nome, recintos=None, ingresso=100, dinheiro=0):
         self.__nome = nome
-        self.__recintos = recintos
+        self.__recintos = recintos if recintos is not None else []
         self.__ingresso = ingresso
         self.__dinheiro = dinheiro
 
@@ -12,8 +12,12 @@ class Zoologico:
         return self.__nome
     
     def adicionar_recinto(self, recinto):
+        if not isinstance(recinto, Recinto):
+            raise ValueError("Não é um recinto")
+        
         self.__recintos.append(recinto)
-    
+
+
     def remover_recinto(self, recinto):
         if recinto in self.mostrar_recintos():
             self.__recintos.remove(recinto)
@@ -21,7 +25,7 @@ class Zoologico:
     def mostrar_recintos(self):
         recintos = []
         for recinto in self.__recintos:
-            recintos.append(recinto.especie())
+            recintos.append(recinto)
 
         return recintos
     
@@ -29,14 +33,17 @@ class Zoologico:
         return len(self.__recintos)
     
     def mostrar_animais(self):
+        animais = []
         for recinto in self.__recintos:
-            for animal in recinto.__animals:
-                return animal.__name, animal.__species, animal.__happiness
+            for animal in recinto.mostrar_animais():
+                animais.append(animal)
+        
+        return animais
     
     def animais_quantidade(self):
         quantidade = 0
         for recinto in self.__recintos:
-            quantidade += len(recinto.__animals)
+            quantidade += recinto.animais_quantidade()
         return quantidade
 
     def dinheiro(self):
@@ -45,10 +52,10 @@ class Zoologico:
     def preco_ingresso(self, valor):
         self.__ingresso = valor
     
-    def atrair_visitantes(self):
+    def abrir_zoo(self):
         visitantes = 0
         for recinto in self.__recintos:
-            if recinto.get_limpeza() > 7: 
+            if recinto.get_limpeza() > 6: 
                 for animal in recinto.get_animais():
                     if animal.get_felicidade() > 8:
                         visitantes += 2
@@ -57,3 +64,4 @@ class Zoologico:
     
         self.__dinheiro += visitantes * self.__ingresso
         print(f"Zoológico atraiu {visitantes} visitantes, dinheiro atual: {self.__dinheiro}")
+    
